@@ -39,9 +39,15 @@ public class EnemyAi : MonoBehaviour
                 //Chase Player until close enough to shoot projectile
                 break;
             case AIState.Die:
-                //check health for death
-                //Die, maybe adding up a global variable for winning condition?
+                // Die, maybe adding up a global variable for winning condition?
+                // Drop health or weapons for player?
+                // Die animation
+                Debug.Log("DEAD");
                 break;
+        }
+
+        if (Health <= 0f) {
+            aiState = AIState.Die;
         }
     }
 }
