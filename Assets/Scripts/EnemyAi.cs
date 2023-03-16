@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class EnemyAi : MonoBehaviour
 {
+    public int count;
+
     public static float MaxAllowedThrowPositionError = (0.25f + 0.5f) * 0.99f;
     public float Health = 100;
     public float throwSpeed = 6;
@@ -27,6 +29,8 @@ public class EnemyAi : MonoBehaviour
 
     void Start()
     {
+        count = 0;
+
         aiState = AIState.Patrol;
         player = GameObject.Find("Air Balloon");
         shootable = true;
@@ -76,6 +80,7 @@ public class EnemyAi : MonoBehaviour
 
         if (Health <= 0f) {
             aiState = AIState.Die;
+            count += 1;
         }
     }
 

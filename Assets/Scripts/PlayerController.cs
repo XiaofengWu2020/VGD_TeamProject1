@@ -29,6 +29,8 @@ public class PlayerController : MonoBehaviour
 	private int shootCD = 100;
 	private bool shootable;
 
+	public float playerHealth = 100;
+
 
 	// At the start of the game..
 	void Awake()
