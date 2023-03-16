@@ -100,6 +100,8 @@ public class EnemyAi : MonoBehaviour
         rb.MoveRotation(rb.rotation * deltaRotation);
         var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
         bullet.transform.forward = direction.normalized;
+        
+        bullet.GetComponent<Bullet>().tag = "Enemy";
 
         bullet.GetComponent<Rigidbody>().AddForce(direction.normalized * shootForce, ForceMode.Impulse);
         bullet.GetComponent<Rigidbody>().AddForce(Camera.main.transform.up * upForce, ForceMode.Impulse);

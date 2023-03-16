@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour
 
 		var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
 		bullet.transform.forward = direction.normalized;
-
+		bullet.GetComponent<Bullet>().tag = "Player";
 		bullet.GetComponent<Rigidbody>().AddForce(direction.normalized * shootForce, ForceMode.Impulse);
 		bullet.GetComponent<Rigidbody>().AddForce(Camera.main.transform.up * upForce, ForceMode.Impulse);
 
@@ -104,6 +104,11 @@ public class PlayerController : MonoBehaviour
 
 		Quaternion targetRotation = Quaternion.Euler(0, cameraTransform.eulerAngles.y + 90, 0);
 		transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
+		if (playerHealth <= 0) {
+			// TODO: die
+			Debug.Log("PLAYER DEAD");
+		}
 
 	}
 

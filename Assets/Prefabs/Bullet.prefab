@@ -9804,6 +9804,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DAMAGE: 50
+  tag: 
 --- !u!108 &7186172868898904281
 Light:
   m_ObjectHideFlags: 0

@@ -5,6 +5,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public float DAMAGE = 50f;
+    public string tag = "";
     GameObject trail;
     GameObject explosion;
     private bool collided = false;
@@ -18,13 +19,21 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (collided) {
+        if (other.gameObject.tag == tag
+        || (other.gameObject.transform.parent && other.gameObject.transform.parent.gameObject.tag == tag)
+        || collided
+        ) {
             return;
         }
+
         collided = true;
-        if(other.gameObject.tag == "Enemy") {
+        if (other.gameObject.tag == "Enemy") {
             // decrease enemy health
             other.gameObject.GetComponent<EnemyAi>().Health -= DAMAGE;
+        } else if (other.gameObject.tag == "Player") {
+            other.gameObject.GetComponent<PlayerController>().playerHealth -= DAMAGE;
+        } else if (other.gameObject.transform.parent && other.gameObject.transform.parent.gameObject.tag == "Player") {
+            other.gameObject.transform.parent.gameObject.GetComponent<PlayerController>().playerHealth -= DAMAGE;
         }
         // effects
         gameObject.GetComponent<MeshRenderer>().enabled = false;
