@@ -12,6 +12,7 @@ public class EnemyAi : MonoBehaviour
     public float throwSpeed = 6;
     private GameObject player;
     private Rigidbody rb;
+    private Animator anim;
     public GameObject bulletPrefab;
     public Transform bulletSpawnPoint;
     private int shootCD = 100;
@@ -30,7 +31,7 @@ public class EnemyAi : MonoBehaviour
     void Start()
     {
         count = 0;
-
+        anim = GetComponent<Animator>();
         aiState = AIState.Patrol;
         player = GameObject.Find("Air Balloon");
         shootable = true;
@@ -75,12 +76,14 @@ public class EnemyAi : MonoBehaviour
                 // Drop health or weapons for player?
                 // Die animation
                 Debug.Log("DEAD");
+                //enemy fall when die
                 break;
         }
 
         if (Health <= 0f) {
+            anim.SetBool("IsDie", true);
+            rb.useGravity = true;
             aiState = AIState.Die;
-            count += 1;
         }
     }
 
