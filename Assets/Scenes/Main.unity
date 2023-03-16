@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 803815241}
-  m_IndirectSpecularColor: {r: 0.01602986, g: 0.018923363, b: 0.021959236, a: 1}
+  m_IndirectSpecularColor: {r: 0.016021518, g: 0.01882578, b: 0.021876836, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -568,6 +568,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b52778acbcef6884f8d8747583a8b41b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 100
   aiState: 0
 --- !u!1 &777863885
 GameObject:
@@ -1256,7 +1257,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1412113879}
   m_LocalRotation: {x: 0.03334628, y: -0.786106, z: 0.04257398, w: 0.61572146}
-  m_LocalPosition: {x: 4.342163, y: 2.3571014, z: 3.0534983}
+  m_LocalPosition: {x: 4.3606567, y: 2.3571014, z: 2.978562}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7620051006665946916}
@@ -1319,7 +1320,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5295556646717913000, guid: e177874775a7c69438a6dc5c1fe10cf9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 232.0735
+      value: 231.99857
       objectReference: {fileID: 0}
     - target: {fileID: 5295556646717913000, guid: e177874775a7c69438a6dc5c1fe10cf9, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1327,7 +1328,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5295556646717913000, guid: e177874775a7c69438a6dc5c1fe10cf9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 521.65784
+      value: 521.63934
       objectReference: {fileID: 0}
     - target: {fileID: 5295556646717913000, guid: e177874775a7c69438a6dc5c1fe10cf9, type: 3}
       propertyPath: m_LocalRotation.w
@@ -9227,6 +9228,7 @@ GameObject:
   - component: {fileID: 8521001950278490890}
   - component: {fileID: 4249789690553271421}
   - component: {fileID: 6502999505991437523}
+  - component: {fileID: 6502999505991437524}
   m_Layer: 3
   m_Name: propeller axis
   m_TagString: Untagged
@@ -9248,6 +9250,25 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -1292320803106445211, guid: 9a4f2bcc8c23d43da8e62de3114adaf5, type: 3}
+--- !u!95 &6502999505991437524
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6502999505991437522}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c6318d0b0f1aa41e695ee7d5e05b900f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!4 &6507139531930887238
 Transform:
   m_ObjectHideFlags: 0
