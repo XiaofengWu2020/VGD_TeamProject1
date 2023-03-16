@@ -14,8 +14,8 @@ public class PlayerController : MonoBehaviour
 
 	private CharacterController controller;
 	private PlayerInput playerInput;
-	private Vector3 playerVelocity;
-	private Transform cameraTransform;
+	public Vector3 playerVelocity;
+	public Transform cameraTransform;
 
 	private InputAction moveAction;
 	private InputAction floatAction;
