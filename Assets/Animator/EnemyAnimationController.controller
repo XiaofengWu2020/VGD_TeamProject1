@@ -558,9 +558,9 @@ AnimatorState:
   m_Motion: {fileID: 8286939278719381324}
   m_Tag: 
   m_SpeedParameter: 
-  m_MirrorParameter: 
+  m_MirrorParameter: IsDie
   m_CycleOffsetParameter: 
-  m_TimeParameter: 
+  m_TimeParameter: velx
 --- !u!206 &3742135750015528469
 BlendTree:
   m_ObjectHideFlags: 1

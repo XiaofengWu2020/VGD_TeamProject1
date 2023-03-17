@@ -30,6 +30,8 @@ public class EnemyAi : MonoBehaviour
 
     void Start()
     {
+        Time.timeScale = 1.0f;
+
         count = 0;
         anim = GetComponent<Animator>();
         aiState = AIState.Patrol;
@@ -105,5 +107,13 @@ public class EnemyAi : MonoBehaviour
         bullet.GetComponent<Rigidbody>().AddForce(Camera.main.transform.up * upForce, ForceMode.Impulse);
 
     }
-    
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (Health <= 0f)
+        {
+            count += 1;
+        }
+    }
+
 }
