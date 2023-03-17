@@ -12,7 +12,8 @@ public class EnemyAi : MonoBehaviour
     public float throwSpeed = 6;
     private GameObject player;
     private Rigidbody rb;
-    private Animator anim;
+    //private Animator anim;
+    [SerializeField] private Animator anim;
     public GameObject bulletPrefab;
     public Transform bulletSpawnPoint;
     private int shootCD = 100;
@@ -36,6 +37,8 @@ public class EnemyAi : MonoBehaviour
         player = GameObject.Find("Air Balloon");
         shootable = true;
         rb = GetComponent<Rigidbody>();
+        anim.SetBool("IsDie", false);
+
     }
 
     void FixedUpdate()
@@ -82,8 +85,9 @@ public class EnemyAi : MonoBehaviour
 
         if (Health <= 0f) {
             anim.SetBool("IsDie", true);
-            rb.useGravity = true;
             aiState = AIState.Die;
+            rb.useGravity = true;
+
         }
     }
 
@@ -96,7 +100,8 @@ public class EnemyAi : MonoBehaviour
         Vector3 direction = targetPoint - bulletSpawnPoint.position;
         Vector3 dir = direction;
         dir.y = 0;
-        Quaternion deltaRotation = Quaternion.Euler(dir * Time.fixedDeltaTime);
+        Vector3 velocity = new Vector3(0, 100, 0);
+        Quaternion deltaRotation = Quaternion.Euler(velocity * Time.fixedDeltaTime);
         rb.MoveRotation(rb.rotation * deltaRotation);
         var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
         bullet.transform.forward = direction.normalized;
@@ -105,5 +110,15 @@ public class EnemyAi : MonoBehaviour
         bullet.GetComponent<Rigidbody>().AddForce(Camera.main.transform.up * upForce, ForceMode.Impulse);
 
     }
-    
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (Health <= 0f)
+        {
+            count += 1;
+
+            
+        }
+    }
+
 }
