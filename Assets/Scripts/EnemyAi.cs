@@ -18,7 +18,8 @@ public class EnemyAi : MonoBehaviour
     private Animator anim;
     public GameObject bulletPrefab;
     public Transform bulletSpawnPoint;
-    private int shootCD = 100;
+    public int shootCD = 100;
+    private int shootCDcounter;
     private bool shootable;
     public float shootForce = 6;
     public float upForce = 2;
@@ -36,23 +37,28 @@ public class EnemyAi : MonoBehaviour
         nma = GetComponent<NavMeshAgent>();
         if (nma == null)
             Debug.Log("NavMeshAgent could not be found");
-
+        Time.timeScale = 1.0f;
         count = 0;
         anim = GetComponent<Animator>();
         aiState = AIState.Patrol;
         player = GameObject.Find("Air Balloon");
+        shootCDcounter = shootCD;
         shootable = true;
         rb = GetComponent<Rigidbody>();
     }
 
     void FixedUpdate()
     {
-        shootCD--;
+        if (!shootable)
+        {
+            shootCDcounter--;
+        }
 
-        if (shootCD < 0)
+
+        if (shootCDcounter < 0)
         {
             shootable = true;
-            shootCD = 100;
+            shootCDcounter = shootCD;
         }
     }
 
@@ -107,21 +113,32 @@ public class EnemyAi : MonoBehaviour
 
     public void Throw()
     {
-        shootable = false;
+        if (shootable)
+        {
+            shootable = false;
 
-        Vector3 targetPoint;
-        targetPoint = player.transform.position;
-        Vector3 direction = targetPoint - bulletSpawnPoint.position;
-        Vector3 dir = direction;
-        dir.y = 0;
-        Quaternion deltaRotation = Quaternion.Euler(dir * Time.fixedDeltaTime);
-        rb.MoveRotation(rb.rotation * deltaRotation);
-        var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
-        bullet.transform.forward = direction.normalized;
+            Vector3 targetPoint;
+            targetPoint = player.transform.position;
+            Vector3 direction = targetPoint - bulletSpawnPoint.position;
+            Vector3 dir = direction;
+            dir.y = 0;
+            Quaternion deltaRotation = Quaternion.Euler(dir * Time.fixedDeltaTime);
+            rb.MoveRotation(rb.rotation * deltaRotation);
+            var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
+            bullet.transform.forward = direction.normalized;
 
-        bullet.GetComponent<Rigidbody>().AddForce(direction.normalized * shootForce, ForceMode.Impulse);
-        bullet.GetComponent<Rigidbody>().AddForce(Camera.main.transform.up * upForce, ForceMode.Impulse);
+            bullet.GetComponent<Rigidbody>().AddForce(direction.normalized * shootForce, ForceMode.Impulse);
+            bullet.GetComponent<Rigidbody>().AddForce(Camera.main.transform.up * upForce, ForceMode.Impulse);
+        }
 
     }
-    
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (Health <= 0f)
+        {
+            count += 1;
+        }
+    }
+
 }
