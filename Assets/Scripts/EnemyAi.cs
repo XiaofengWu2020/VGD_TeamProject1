@@ -16,7 +16,7 @@ public class EnemyAi : MonoBehaviour
     public GameObject bulletPrefab;
     public Transform bulletSpawnPoint;
     public int shootCD = 100;
-    public int shootCDcounter;
+    private int shootCDcounter;
     private bool shootable;
     public float shootForce = 6;
     public float upForce = 2;
