@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 
+//[RequireComponent(typeof(NavMeshAgent))]
 public class EnemyAi : MonoBehaviour
 {
     public int count;
+    private NavMeshAgent nma;
 
     public static float MaxAllowedThrowPositionError = (0.25f + 0.5f) * 0.99f;
     public float Health = 100;
@@ -30,6 +33,10 @@ public class EnemyAi : MonoBehaviour
 
     void Start()
     {
+        nma = GetComponent<NavMeshAgent>();
+        if (nma == null)
+            Debug.Log("NavMeshAgent could not be found");
+
         count = 0;
         anim = GetComponent<Animator>();
         aiState = AIState.Patrol;
@@ -55,10 +62,21 @@ public class EnemyAi : MonoBehaviour
         {
             case AIState.Patrol:
                 //Patrol until player appear, than switch to Chase player
+                aiState = AIState.ChasePlayer;
                 break;
             //... TODO handle other states
             case AIState.ChasePlayer:
                 //Chase Player until close enough to shoot projectile
+
+                //Debug.Log(player.transform.position);
+                NavMeshHit closestHit;
+                Vector3 dest = nma.transform.position;
+                if (NavMesh.SamplePosition(player.transform.position, out closestHit, 500f, NavMesh.AllAreas))
+                    dest = (nma.transform.position - closestHit.position).normalized * 25 + closestHit.position;
+                nma.SetDestination(dest);
+
+                //anim.SetFloat("vely", nma.velocity.magnitude / nma.speed);
+
                 break;
             case AIState.AttackPlayerWithProjectile:
 
