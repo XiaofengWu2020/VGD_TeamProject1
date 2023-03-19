@@ -9790,7 +9790,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!114 &1158450985990609118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9878,7 +9878,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 0e6bcdd729c014e6c96c75a287bba7df, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.81
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -9922,7 +9922,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.45
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
