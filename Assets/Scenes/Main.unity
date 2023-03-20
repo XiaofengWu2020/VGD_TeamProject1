@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 803815241}
-  m_IndirectSpecularColor: {r: 0.01602986, g: 0.018923363, b: 0.021959236, a: 1}
+  m_IndirectSpecularColor: {r: 0.016021518, g: 0.01882578, b: 0.021876836, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -108,8 +108,8 @@ NavMeshSettings:
     agentTypeID: 0
     agentRadius: 0.5
     agentHeight: 2
-    agentSlope: 45
-    agentClimb: 0.4
+    agentSlope: 60
+    agentClimb: 2
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 0
     minRegionArea: 2
@@ -117,7 +117,7 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualTileSize: 0
     tileSize: 256
-    accuratePlacement: 0
+    accuratePlacement: 1
     maxJobWorkers: 0
     preserveTilesOutsideBounds: 0
     debug:
@@ -400,15 +400,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9641ca0ac564243899be61f69f1bc736, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 227.7
+      value: 216.55
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9641ca0ac564243899be61f69f1bc736, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 31.9
+      value: 24.79
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9641ca0ac564243899be61f69f1bc736, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 535.9
+      value: 576.61
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9641ca0ac564243899be61f69f1bc736, type: 3}
       propertyPath: m_LocalRotation.w
@@ -811,7 +811,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 0
+  m_BaseOffset: 20
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &741096812
@@ -832,7 +832,6 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4908183627252305071, guid: 9585637aeefbd554996d69d6664ff239, type: 3}
   bulletSpawnPoint: {fileID: 118692168}
   shootCD: 100
-  shootCDcounter: 0
   shootForce: 6
   upForce: 2
   aiState: 1
@@ -1712,7 +1711,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1412113879}
   m_LocalRotation: {x: 0.03334628, y: -0.786106, z: 0.04257398, w: 0.61572146}
-  m_LocalPosition: {x: 4.5007324, y: 2.3570976, z: 2.4107368}
+  m_LocalPosition: {x: 4.1956787, y: 2.3570976, z: 3.6470652}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7620051006665946916}
@@ -1775,7 +1774,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5295556646717913000, guid: e177874775a7c69438a6dc5c1fe10cf9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 231.43074
+      value: 232.66707
       objectReference: {fileID: 0}
     - target: {fileID: 5295556646717913000, guid: e177874775a7c69438a6dc5c1fe10cf9, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1783,7 +1782,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5295556646717913000, guid: e177874775a7c69438a6dc5c1fe10cf9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 519.1493
+      value: 519.45435
       objectReference: {fileID: 0}
     - target: {fileID: 5295556646717913000, guid: e177874775a7c69438a6dc5c1fe10cf9, type: 3}
       propertyPath: m_LocalRotation.w
