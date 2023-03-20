@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 
 public class EnemyAi : MonoBehaviour
 {
     public int count;
+    private NavMeshAgent nma;
+
 
     public static float MaxAllowedThrowPositionError = (0.25f + 0.5f) * 0.99f;
     public float Health = 100;
@@ -31,6 +34,10 @@ public class EnemyAi : MonoBehaviour
 
     void Start()
     {
+        nma = GetComponent<NavMeshAgent>();
+        if (nma == null)
+            Debug.Log("NavMeshAgent could not be found");
+
         Time.timeScale = 1.0f;
 
         count = 0;
@@ -63,16 +70,29 @@ public class EnemyAi : MonoBehaviour
         {
             case AIState.Patrol:
                 //Patrol until player appear, than switch to Chase player
+                //For Alpha, begin Chase immediately
+                aiState = AIState.ChasePlayer;
                 break;
             //... TODO handle other states
             case AIState.ChasePlayer:
                 //Chase Player until close enough to shoot projectile
+                NavMeshHit closestHit;
+                Vector3 dest = nma.transform.position;
+                if (NavMesh.SamplePosition(player.transform.position, out closestHit, 500f, NavMesh.AllAreas))
+                    dest = (nma.transform.position - closestHit.position).normalized * 20 + closestHit.position;
+                nma.SetDestination(dest);
+                float distance = (player.transform.position - nma.transform.position).magnitude;
+                if (distance <= 25)
+                    aiState = AIState.AttackPlayerWithProjectile;
                 break;
             case AIState.AttackPlayerWithProjectile:
 
                 if (shootable) 
                 {
                     Throw();
+                    distance = (player.transform.position - nma.transform.position).magnitude;
+                    if (distance > 30)
+                        aiState = AIState.ChasePlayer;
                     //gameObject.transform.position, throwSpeed, Physics.gravity, player.transform.position, player.GetComponent<PlayerController>().playerVelocity, player.GetComponent<PlayerController>().cameraTransform.forward, MaxAllowedThrowPositionError
                 }
 
@@ -84,6 +104,10 @@ public class EnemyAi : MonoBehaviour
                 // Drop health or weapons for player?
                 // Die animation
                 Debug.Log("DEAD");
+                if (nma.baseOffset > 0)
+                {
+                    nma.enabled = false;
+                }
                 //enemy fall when die
                 break;
         }
