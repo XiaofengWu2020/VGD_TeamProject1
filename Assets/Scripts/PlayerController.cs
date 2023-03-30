@@ -33,6 +33,8 @@ public class PlayerController : MonoBehaviour
 
 	public float playerHealth = 100;
 
+	private float timeSinceCrash = 0f;
+
 
 	// At the start of the game..
 	void Awake()
@@ -106,6 +108,8 @@ public class PlayerController : MonoBehaviour
 
 	void Update()
 	{
+		timeSinceCrash += Time.deltaTime;
+
 		Vector2 hInput = moveAction.ReadValue<Vector2>();
 		Vector2 vInput = floatAction.ReadValue<Vector2>();
 		//playerVelocity = new Vector3(hInput.x, vInput.y, hInput.y);
@@ -131,7 +135,32 @@ public class PlayerController : MonoBehaviour
 		{
 			playerHealth -= other.gameObject.GetComponent<Bullet>().DAMAGE;
 			print("player just got hit! Remain Health:" + playerHealth);
+		}  
+	}
+
+	void OnCollisionEnter(Collision other)
+	{
+		if (other.gameObject.tag == "Terrain" && timeSinceCrash > 2f)
+		{
+			playerHealth -= 10;
+			PlayEffects(other);
+			timeSinceCrash = 0f;
+		} 
+		else if (other.gameObject.tag == "Enemy" && timeSinceCrash > 2f) 
+		{
+			playerHealth -= 10;
+			other.gameObject.GetComponent<EnemyAi>().Health -= 5;
+			PlayEffects(other);
+			timeSinceCrash = 0f;
 		}
+	}
+
+	void PlayEffects(Collision col)
+	{
+		GameObject explosion = transform.Find("Explosion").gameObject;
+		explosion.transform.position = col.contacts[0].point;
+		explosion.GetComponent<ParticleSystem>().Play();
+		explosion.GetComponent<AudioSource>().Play();
 	}
 
 }
