@@ -9803,7 +9803,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32d081305bf5ada4b8ea312971c3e9d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DAMAGE: 50
+  DAMAGE: 51
 --- !u!108 &7186172868898904281
 Light:
   m_ObjectHideFlags: 0

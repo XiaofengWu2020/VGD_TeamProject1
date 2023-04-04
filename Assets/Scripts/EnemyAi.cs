@@ -8,10 +8,11 @@ public class EnemyAi : MonoBehaviour
 {
     public int count;
     private NavMeshAgent nma;
-
-
+    public delegate void EnemyKilled();
+    public static event EnemyKilled OnEnemyKilled;
+    private bool hasDied = false;
     public static float MaxAllowedThrowPositionError = (0.25f + 0.5f) * 0.99f;
-    public float Health = 100;
+    public float Health = 49;
     public float throwSpeed = 6;
     private GameObject player;
     private Rigidbody rb;
@@ -103,7 +104,7 @@ public class EnemyAi : MonoBehaviour
                 // Die, maybe adding up a global variable for winning condition?
                 // Drop health or weapons for player?
                 // Die animation
-                Debug.Log("DEAD");
+                //Debug.Log("DEAD");
                 if (nma.baseOffset > 0)
                 {
                     nma.enabled = false;
@@ -116,6 +117,7 @@ public class EnemyAi : MonoBehaviour
             anim.SetBool("IsDie", true);
             rb.useGravity = true;
             aiState = AIState.Die;
+            Die();
         }
     }
 
@@ -148,5 +150,26 @@ public class EnemyAi : MonoBehaviour
             count += 1;
         }
     }
+    private void Die()
+    {
+        if (!hasDied)
+        {
+            hasDied = true;
 
+            if (OnEnemyKilled != null)
+            {
+                OnEnemyKilled();
+            }
+
+            StartCoroutine(DestroyEnemyAfterDelay(10f));
+        }
+    }
+
+    private IEnumerator DestroyEnemyAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Destroy(gameObject);
+    }
 }
+
+
