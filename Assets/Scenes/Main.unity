@@ -1501,8 +1501,9 @@ MonoBehaviour:
   - {fileID: 1162772831}
   EnemyModel: {fileID: 1142156805286566285, guid: 0335545292a5ca14194f5f126a2f5321, type: 3}
   enemiesPerWave: 15
-  enemiesToKillForNextWave: 10
+  enemiesToKillForNextWave: 3
   timeBetweenWaves: 5
+  enemiesRemaining: 0
   currentWave: 0
 --- !u!4 &1146590452
 Transform:

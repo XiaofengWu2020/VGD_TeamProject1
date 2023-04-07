@@ -773,7 +773,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   count: 0
-  Health: 100
+  Health: 50
   throwSpeed: 6
   bulletPrefab: {fileID: 4908183627252305071, guid: 9585637aeefbd554996d69d6664ff239, type: 3}
   bulletSpawnPoint: {fileID: 223113182237015198}

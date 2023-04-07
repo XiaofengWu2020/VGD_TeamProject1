@@ -12,7 +12,7 @@ public class EnemyAi : MonoBehaviour
     public static event EnemyKilled OnEnemyKilled;
     private bool hasDied = false;
     public static float MaxAllowedThrowPositionError = (0.25f + 0.5f) * 0.99f;
-    public float Health = 49;
+    public float Health = 50;
     public float throwSpeed = 6;
     private GameObject player;
     private Rigidbody rb;
