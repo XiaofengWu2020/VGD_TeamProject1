@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
 	private PlayerInput playerInput;
 	public Vector3 playerVelocity;
 	public Transform cameraTransform;
+	private GameObject wind;
 
 	private InputAction moveAction;
 	private InputAction floatAction;
@@ -33,6 +34,9 @@ public class PlayerController : MonoBehaviour
 
 	public float playerHealth = 100;
 
+	private float timeSinceCrash = 0f;
+	private float timeSinceHit= 0f;
+
 
 	// At the start of the game..
 	void Awake()
@@ -47,6 +51,7 @@ public class PlayerController : MonoBehaviour
 		shootable = true;
 		shootCDcounter = shootCD;
 
+		wind = cameraTransform.Find("Wind").gameObject;
 	}
 
     private void OnEnable()
@@ -106,11 +111,33 @@ public class PlayerController : MonoBehaviour
 
 	void Update()
 	{
+		timeSinceCrash += Time.deltaTime;
+		timeSinceHit += Time.deltaTime;
+
 		Vector2 hInput = moveAction.ReadValue<Vector2>();
 		Vector2 vInput = floatAction.ReadValue<Vector2>();
 		//playerVelocity = new Vector3(hInput.x, vInput.y, hInput.y);
 		playerVelocity = hInput.x * 0.5f * cameraTransform.right.normalized + new Vector3(0, vInput.y, 0)+ hInput.y * cameraTransform.forward.normalized;
-		controller.Move(playerVelocity * Time.deltaTime * speed);
+
+		Vector3 pos = transform.position;
+		Vector3 windForce = new Vector3(0, 0, 0);
+		if (pos.x < -800 || pos.x > 800 || pos.z < -800 || pos.z > 800 || pos.y > 50) {
+			// out of bounds
+			// start strong wind effect
+			Vector3 dir = Vector3.Normalize(transform.position - new Vector3(0, 10, 500)) * -1;
+			windForce = dir * 2.5f;
+			wind.transform.rotation = Quaternion.LookRotation(dir);
+			wind.transform.position = transform.position - dir * 100;
+			wind.GetComponent<ParticleSystem>().Play();
+			if (!wind.GetComponent<AudioSource>().isPlaying) {
+				wind.GetComponent<AudioSource>().Play();
+			}
+		} else {
+			wind.GetComponent<ParticleSystem>().Stop();
+			wind.GetComponent<AudioSource>().Stop();
+		}
+
+		controller.Move((playerVelocity * speed + windForce) * Time.deltaTime);
 		if (playerVelocity != Vector3.zero)
         {
 			animator.SetFloat("Blend", 1);
@@ -127,11 +154,38 @@ public class PlayerController : MonoBehaviour
 
 	void OnTriggerEnter(Collider other)
 	{
-		if (other.gameObject.tag == "EnemyBullet")
+		if (other.gameObject.tag == "EnemyBullet" && timeSinceHit > 1f)
 		{
 			playerHealth -= other.gameObject.GetComponent<Bullet>().DAMAGE;
+			timeSinceHit = 0f;
 			print("player just got hit! Remain Health:" + playerHealth);
+		}  
+	}
+
+	void OnCollisionEnter(Collision other)
+	{
+		if (other.gameObject.tag == "Terrain" && timeSinceCrash > 2f)
+		{
+			playerHealth -= 10;
+			PlayEffects(other);
+			timeSinceCrash = 0f;
+		} 
+		else if (other.gameObject.tag == "Enemy" && timeSinceCrash > 2f) 
+		{
+			playerHealth -= 10;
+			other.gameObject.GetComponent<EnemyAi>().Health -= 5;
+			PlayEffects(other);
+			timeSinceCrash = 0f;
 		}
+	}
+
+	void PlayEffects(Collision col)
+	{
+		GameObject explosion = transform.Find("Explosion").gameObject;
+		explosion.transform.position = col.contacts[0].point;
+		explosion.GetComponent<ParticleSystem>().Play();
+		explosion.GetComponent<AudioSource>().Play();
+		// TODO: camera shake
 	}
 
 }
