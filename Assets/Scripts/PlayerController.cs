@@ -32,7 +32,9 @@ public class PlayerController : MonoBehaviour
 	public bool shootable;
 	private float shootOffset = 0.1f;
 
+	public float maxHealth = 100;
 	public float playerHealth = 100;
+	public HealthBar healthBar;
 
 	private float timeSinceCrash = 0f;
 	private float timeSinceHit= 0f;
@@ -50,8 +52,10 @@ public class PlayerController : MonoBehaviour
 		shootAction = playerInput.actions["Shoot"];
 		shootable = true;
 		shootCDcounter = shootCD;
+		playerHealth = maxHealth;
+		healthBar.SetMaxHealth(maxHealth);
 
-		wind = cameraTransform.Find("Wind").gameObject;
+        wind = cameraTransform.Find("Wind").gameObject;
 	}
 
     private void OnEnable()
@@ -157,6 +161,7 @@ public class PlayerController : MonoBehaviour
 		if (other.gameObject.tag == "EnemyBullet" && timeSinceHit > 1f)
 		{
 			playerHealth -= other.gameObject.GetComponent<Bullet>().DAMAGE;
+			healthBar.SetHealth(playerHealth);
 			timeSinceHit = 0f;
 			print("player just got hit! Remain Health:" + playerHealth);
 		}  
@@ -167,13 +172,15 @@ public class PlayerController : MonoBehaviour
 		if (other.gameObject.tag == "Terrain" && timeSinceCrash > 2f)
 		{
 			playerHealth -= 10;
-			PlayEffects(other);
+            healthBar.SetHealth(playerHealth);
+            PlayEffects(other);
 			timeSinceCrash = 0f;
 		} 
 		else if (other.gameObject.tag == "Enemy" && timeSinceCrash > 2f) 
 		{
 			playerHealth -= 10;
-			other.gameObject.GetComponent<EnemyAi>().Health -= 5;
+            healthBar.SetHealth(playerHealth);
+            other.gameObject.GetComponent<EnemyAi>().Health -= 5;
 			PlayEffects(other);
 			timeSinceCrash = 0f;
 		}
