@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 803815241}
-  m_IndirectSpecularColor: {r: 0.01602986, g: 0.018923363, b: 0.021959236, a: 1}
+  m_IndirectSpecularColor: {r: 0.016021518, g: 0.01882578, b: 0.021876836, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1647,7 +1647,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 277.1, y: 184.6}
+  m_AnchoredPosition: {x: 275, y: 165}
   m_SizeDelta: {x: 186.96, y: 29.563}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1128126397
@@ -2529,7 +2529,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1412113879}
   m_LocalRotation: {x: 0.03334628, y: -0.786106, z: 0.04257398, w: 0.61572146}
-  m_LocalPosition: {x: 4.3483887, y: 2.3570976, z: 3.0280313}
+  m_LocalPosition: {x: 4.312744, y: 2.3570976, z: 3.172532}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1806002587}
@@ -2593,7 +2593,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5295556646717913000, guid: e177874775a7c69438a6dc5c1fe10cf9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 232.04803
+      value: 232.19254
       objectReference: {fileID: 0}
     - target: {fileID: 5295556646717913000, guid: e177874775a7c69438a6dc5c1fe10cf9, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2601,7 +2601,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5295556646717913000, guid: e177874775a7c69438a6dc5c1fe10cf9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 519.30164
+      value: 519.3373
       objectReference: {fileID: 0}
     - target: {fileID: 5295556646717913000, guid: e177874775a7c69438a6dc5c1fe10cf9, type: 3}
       propertyPath: m_LocalRotation.w
@@ -22929,7 +22929,7 @@ MonoBehaviour:
   shootable: 0
   maxHealth: 100
   playerHealth: 100
-  healthBar: {fileID: 0}
+  healthBar: {fileID: 1128126398}
 --- !u!114 &7130338026065898914
 MonoBehaviour:
   m_ObjectHideFlags: 0
