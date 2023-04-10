@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
 	private float timeSinceCrash = 0f;
 	private float timeSinceHit= 0f;
 
+	private bool audioFading = false;
 
 	// At the start of the game..
 	void Awake()
@@ -124,22 +125,53 @@ public class PlayerController : MonoBehaviour
 		//playerVelocity = new Vector3(hInput.x, vInput.y, hInput.y);
 		playerVelocity = hInput.x * 0.5f * cameraTransform.right.normalized + new Vector3(0, vInput.y, 0)+ hInput.y * cameraTransform.forward.normalized;
 
-		Vector3 pos = transform.position;
-		Vector3 windForce = new Vector3(0, 0, 0);
-		if (pos.x < -800 || pos.x > 800 || pos.z < -800 || pos.z > 800 || pos.y > 50) {
-			// out of bounds
-			// start strong wind effect
-			Vector3 dir = Vector3.Normalize(transform.position - new Vector3(0, 10, 500)) * -1;
-			windForce = dir * 2.5f;
-			wind.transform.rotation = Quaternion.LookRotation(dir);
-			wind.transform.position = transform.position - dir * 100;
-			wind.GetComponent<ParticleSystem>().Play();
-			if (!wind.GetComponent<AudioSource>().isPlaying) {
-				wind.GetComponent<AudioSource>().Play();
+		ParticleSystem particles = gameObject.GetComponent<ParticleSystem>();
+		if (playerVelocity.magnitude >= 1f) {
+			if (!particles.isPlaying) {
+				particles.Play(false);
 			}
 		} else {
-			wind.GetComponent<ParticleSystem>().Stop();
-			wind.GetComponent<AudioSource>().Stop();
+			particles.Stop(false);
+		}
+
+		Vector3 pos = transform.position;
+		Vector3 windForce = new Vector3(0, 0, 0);
+		AudioSource windAudio = wind.GetComponent<AudioSource>();
+		if (pos.x < -800 || pos.x > 800 || pos.z < -800 || pos.z > 800 || pos.y > 30) {
+			// out of bounds
+			// start strong wind effect
+			Vector3 dir = new Vector3(0, 0, 0);
+			// Vector3 dir = Vector3.Normalize(transform.position - new Vector3(0, 10, 500)) * -1;
+			if (pos.x < -800) {
+				dir += new Vector3(1, 0, 0);
+			} else if (pos.x > 800) {
+				dir += new Vector3(-1, 0, 0);
+			}
+			if (pos.z < -800) {
+				dir += new Vector3(0, 0, 1);
+			} else if (pos.z > 800) {
+				dir += new Vector3(0, 0, -1);
+			}
+			if (pos.y > 25) {
+				dir += new Vector3(0, -1, 0);
+			}
+			windForce = dir * 4f;
+			wind.transform.rotation = Quaternion.LookRotation(dir);
+			wind.transform.position = transform.position - dir * 100;
+			wind.GetComponent<ParticleSystem>().Play(false);
+			
+			if (!windAudio.isPlaying) {
+				windAudio.volume = 1;
+				windAudio.Play();
+			} else if (windAudio.volume < 1f) {
+				windAudio.volume += 0.01f;
+			}
+		} else {
+			wind.GetComponent<ParticleSystem>().Stop(false);
+			windAudio.volume -= 0.01f;
+			if (windAudio.volume <= 0f && windAudio.isPlaying) {
+				windAudio.Stop();
+			}
 		}
 
 		controller.Move((playerVelocity * speed + windForce) * Time.deltaTime);
@@ -191,7 +223,7 @@ public class PlayerController : MonoBehaviour
 	{
 		GameObject explosion = transform.Find("Explosion").gameObject;
 		explosion.transform.position = col.contacts[0].point;
-		explosion.GetComponent<ParticleSystem>().Play();
+		explosion.GetComponent<ParticleSystem>().Play(false);
 		explosion.GetComponent<AudioSource>().Play();
 		// TODO: camera shake
 	}
