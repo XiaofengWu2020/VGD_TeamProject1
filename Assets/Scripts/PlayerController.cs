@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
 
-[RequireComponent(typeof(CharacterController), typeof(PlayerInput))]
+[RequireComponent(typeof(PlayerInput))]
 public class PlayerController : MonoBehaviour
 {
 	public Animator animator;
@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
 	public float speed;
 	public float rotationSpeed;
 
-	private CharacterController controller;
+	private Rigidbody controller;
 	private PlayerInput playerInput;
 	public Vector3 playerVelocity;
 	public Transform cameraTransform;
@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
 	{
 		Cursor.lockState = CursorLockMode.Locked;
 		animator = GetComponent<Animator>();
-		controller = GetComponent<CharacterController>();
+		controller = GetComponent<Rigidbody>();
 		playerInput = GetComponent<PlayerInput>();
 		cameraTransform = Camera.main.transform;
 		moveAction = playerInput.actions["Move"];
@@ -102,6 +102,7 @@ public class PlayerController : MonoBehaviour
 
 	void FixedUpdate()
 	{
+		moveUpdate();
 		if (!shootable)
         {
 			shootCDcounter--;
@@ -115,66 +116,92 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-	void Update()
-	{
+	void moveUpdate()
+    {
 		timeSinceCrash += Time.deltaTime;
 		timeSinceHit += Time.deltaTime;
 
 		Vector2 hInput = moveAction.ReadValue<Vector2>();
 		Vector2 vInput = floatAction.ReadValue<Vector2>();
 		//playerVelocity = new Vector3(hInput.x, vInput.y, hInput.y);
-		playerVelocity = hInput.x * 0.5f * cameraTransform.right.normalized + new Vector3(0, vInput.y, 0)+ hInput.y * cameraTransform.forward.normalized;
+		playerVelocity = hInput.x * 0.5f * cameraTransform.right.normalized + new Vector3(0, vInput.y, 0) + hInput.y * cameraTransform.forward.normalized;
 
 		ParticleSystem particles = gameObject.GetComponent<ParticleSystem>();
-		if (playerVelocity.magnitude >= 1f) {
-			if (!particles.isPlaying) {
+		if (playerVelocity.magnitude >= 1f)
+		{
+			if (!particles.isPlaying)
+			{
 				particles.Play(false);
 			}
-		} else {
+		}
+		else
+		{
 			particles.Stop(false);
 		}
 
 		Vector3 pos = transform.position;
 		Vector3 windForce = new Vector3(0, 0, 0);
 		AudioSource windAudio = wind.GetComponent<AudioSource>();
-		if (pos.x < -800 || pos.x > 800 || pos.z < -800 || pos.z > 800 || pos.y > 30) {
+		if (pos.x < -800 || pos.x > 800 || pos.z < -800 || pos.z > 800 || pos.y > 30)
+		{
 			// out of bounds
 			// start strong wind effect
 			Vector3 dir = new Vector3(0, 0, 0);
 			// Vector3 dir = Vector3.Normalize(transform.position - new Vector3(0, 10, 500)) * -1;
-			if (pos.x < -800) {
+			if (pos.x < -800)
+			{
 				dir += new Vector3(1, 0, 0);
-			} else if (pos.x > 800) {
+			}
+			else if (pos.x > 800)
+			{
 				dir += new Vector3(-1, 0, 0);
 			}
-			if (pos.z < -800) {
+			if (pos.z < -800)
+			{
 				dir += new Vector3(0, 0, 1);
-			} else if (pos.z > 800) {
+			}
+			else if (pos.z > 800)
+			{
 				dir += new Vector3(0, 0, -1);
 			}
-			if (pos.y > 25) {
+			if (pos.y > 25)
+			{
 				dir += new Vector3(0, -1, 0);
 			}
 			windForce = dir * 4f;
 			wind.transform.rotation = Quaternion.LookRotation(dir);
 			wind.transform.position = transform.position - dir * 100;
 			wind.GetComponent<ParticleSystem>().Play(false);
-			
-			if (!windAudio.isPlaying) {
+
+			if (!windAudio.isPlaying)
+			{
 				windAudio.volume = 1;
 				windAudio.Play();
-			} else if (windAudio.volume < 1f) {
+			}
+			else if (windAudio.volume < 1f)
+			{
 				windAudio.volume += 0.01f;
 			}
-		} else {
+		}
+		else
+		{
 			wind.GetComponent<ParticleSystem>().Stop(false);
 			windAudio.volume -= 0.01f;
-			if (windAudio.volume <= 0f && windAudio.isPlaying) {
+			if (windAudio.volume <= 0f && windAudio.isPlaying)
+			{
 				windAudio.Stop();
 			}
 		}
 
-		controller.Move((playerVelocity * speed + windForce) * Time.deltaTime);
+		controller.MovePosition(transform.position + windForce * Time.deltaTime);
+		controller.AddForce(playerVelocity * speed, ForceMode.Force);
+
+		Quaternion targetRotation = Quaternion.Euler(0, cameraTransform.eulerAngles.y + 90, 0);
+		transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+	}
+	void Update()
+	{
+		
 		if (playerVelocity != Vector3.zero)
         {
 			animator.SetFloat("Blend", 1);
@@ -184,8 +211,6 @@ public class PlayerController : MonoBehaviour
 			animator.SetBool("Moving", false);
 		}
 
-		Quaternion targetRotation = Quaternion.Euler(0, cameraTransform.eulerAngles.y + 90, 0);
-		transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
 	}
 
