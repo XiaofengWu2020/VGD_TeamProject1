@@ -17,11 +17,16 @@ public class EnemySpawnManager : MonoBehaviour
     public int currentWave;
     private int healthIncrementPerWave = 50;
 
+    public EnemyRemain enemyRemain;
+    public EnemyRemain enemyToKill;
+
     void Start()
     {
         currentWave = 1;
         enemiesRemaining = enemiesPerWave;
         enemiesKilled = 0;
+        enemyRemain.EnemyLeft(enemiesRemaining);
+        enemyToKill.EnemyToKill(enemiesToKillForNextWave - enemiesKilled);
         SpawnWave();
     }
 
@@ -39,6 +44,8 @@ public class EnemySpawnManager : MonoBehaviour
     {
         enemiesRemaining--;
         enemiesKilled++;
+        enemyRemain.EnemyLeft(enemiesRemaining);
+        enemyToKill.EnemyToKill(enemiesToKillForNextWave - enemiesKilled);
 
         if (enemiesKilled >= enemiesToKillForNextWave)
         {
@@ -61,6 +68,8 @@ public class EnemySpawnManager : MonoBehaviour
         enemiesRemaining = enemiesPerWave;
         enemiesKilled = 0;
         enemiesToKillForNextWave += 2; // Increment the enemies to kill for the next wave
+        enemyRemain.EnemyLeft(enemiesRemaining);
+        enemyToKill.EnemyToKill(enemiesToKillForNextWave - enemiesKilled);
         DestroyRemainingEnemies();
         SpawnWave();
     }
