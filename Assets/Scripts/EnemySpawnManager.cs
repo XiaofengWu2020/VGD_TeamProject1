@@ -86,7 +86,8 @@ public class EnemySpawnManager : MonoBehaviour
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (GameObject enemy in enemies)
         {
-            Destroy(enemy);
+            // Destroy(enemy);
+            enemy.GetComponent<EnemyAi>().Despawn();
         }
     }
 
