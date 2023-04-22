@@ -33,6 +33,9 @@ public class EnemyAi : MonoBehaviour
     };
     public AIState aiState;
 
+    GameObject fire;
+    GameObject explosion;
+
     void Start()
     {
         nma = GetComponent<NavMeshAgent>();
@@ -150,7 +153,8 @@ public class EnemyAi : MonoBehaviour
             count += 1;
         }
     }
-    private void Die()
+    
+    public void Die()
     {
         if (!hasDied)
         {
@@ -161,14 +165,28 @@ public class EnemyAi : MonoBehaviour
                 OnEnemyKilled();
             }
 
-            StartCoroutine(DestroyEnemyAfterDelay(10f));
+            StartCoroutine(DestroyEnemyAfterDelay(7.5f));
         }
     }
 
     private IEnumerator DestroyEnemyAfterDelay(float delay)
     {
+        fire = transform.Find("Explosion").gameObject;
+        fire.GetComponent<ParticleSystem>().Play();
+
         yield return new WaitForSeconds(delay);
+        fire.GetComponent<ParticleSystem>().Stop();
+        explosion = transform.Find("Explosion2").gameObject;
+        explosion.GetComponent<ParticleSystem>().Play();
+
+        MeshRenderer[] rs = GetComponentsInChildren<MeshRenderer>();
+        foreach(MeshRenderer r in rs) {
+            r.enabled = false;
+        }
+
+        yield return new WaitForSeconds(3f);
         Destroy(gameObject);
+
     }
 }
 
