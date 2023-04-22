@@ -22,6 +22,8 @@ public class EnemySpawnManager : MonoBehaviour
     public EnemyRemain enemyToKill;
     public WaveBar waveNow;
 
+    public WinLose winState;
+
     void Start()
     {
         currentWave = 1;
@@ -98,5 +100,11 @@ public class EnemySpawnManager : MonoBehaviour
         GameObject spawnedEnemy = Instantiate(EnemyModel, spawn, Quaternion.identity);
         EnemyAi enemyAi = spawnedEnemy.GetComponent<EnemyAi>();
         enemyAi.Health += (currentWave - 1) * healthIncrementPerWave;
+    }
+
+    void Update()
+    {
+        if (currentWave == 4 && enemiesKilled == enemiesToKillForNextWave)
+        winState.winShow();
     }
 }

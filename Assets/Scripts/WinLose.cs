@@ -1,53 +1,43 @@
-using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class WinLose : MonoBehaviour
 {
-    public TextMeshProUGUI countText;
-    public TextMeshProUGUI healthText;
+    public GameObject loseScriptUI;
 
-    public GameObject winText;
-    public GameObject loseText;
+    public GameObject winScriptUI;
 
-    public int count;
-    public float health;
+    //public PlayerController player;
 
 
-    // Start is called before the first frame update
-    void Start()
+    public void loseShow()
     {
-        SetCountText();
-        SetHealthText();
-        winText.SetActive(false);
-        loseText.SetActive(false);
-
-        count = gameObject.GetComponent<EnemyAi>().count;
-        health = gameObject.GetComponent<PlayerController>().playerHealth;
-
+        Cursor.lockState = CursorLockMode.Confined;
+        loseScriptUI.SetActive(true);
+        Time.timeScale = 0f;
     }
 
-    void SetCountText()
+    public void winShow()
     {
-        countText.text = "Count: " + count.ToString();
-        if (count >= 10)
-        {
-            winText.SetActive(true);
-        }
+        Cursor.lockState = CursorLockMode.Confined;
+        winScriptUI.SetActive(true);
+        Time.timeScale = 0f;
     }
 
-    void SetHealthText()
+    public void replay()
     {
-        healthText.text = "Health: " + health.ToString();
-        if (health <= 0)
-        {
-            loseText.SetActive(true);
-        }
+        SceneManager.LoadScene("Main");
     }
 
-    private void OnTriggerEnter (Collider other)
+    public void loadMenu()
     {
-        // TODO
+        SceneManager.LoadScene("MenuScene");
+    }
+
+    public void quitGame()
+    {
+        Debug.Log("Quit!");
+        Application.Quit();
     }
 }

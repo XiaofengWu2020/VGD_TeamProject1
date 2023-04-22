@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
 
 	private bool audioFading = false;
 
-    public LoseScript loseState;
+    public WinLose loseState;
 
     // At the start of the game..
     void Awake()
