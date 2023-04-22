@@ -6211,7 +6211,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.21199036, y: -23.026993}
+  m_AnchoredPosition: {x: 0.21199036, y: -15}
   m_SizeDelta: {x: 355.723, y: -56.973}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &784843685
@@ -6234,9 +6234,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Use WASD to move your balloon around. Use SPACE to fly higher and LEFTSHIFT
-    to fly lower. Use LEFTMOUSEBUTTON to shoot a cannon ball projectile. Control
-    the view of the balloon with your mouse movement to aim.
+  m_text: "Use WASD to move your balloon around.\n Use SPACE to fly higher and LEFTSHIFT
+    to fly lower. \nUse LEFTMOUSEBUTTON to shoot a cannon ball projectile. \nControl
+    the view of the balloon with your mouse movement to aim.\nUse ESC to quit, pause,
+    or restart the game."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: accd39b26fbb348469853275e5979346, type: 2}
   m_sharedMaterial: {fileID: 2147374, guid: accd39b26fbb348469853275e5979346, type: 2}
@@ -7943,7 +7944,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 66}
+  m_AnchoredPosition: {x: 0, y: 86.821}
   m_SizeDelta: {x: -77.423904, y: -176.668}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1003669764

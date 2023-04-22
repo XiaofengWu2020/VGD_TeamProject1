@@ -1839,6 +1839,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slider: {fileID: 1015162151}
   text: {fileID: 283766403}
+  enemy: {fileID: 1146590451}
 --- !u!114 &1015162151
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2370,6 +2371,7 @@ MonoBehaviour:
   timeBetweenWaves: 5
   enemiesRemaining: 0
   currentWave: 0
+  totalWave: 0
   enemyRemain: {fileID: 197672056}
   enemyToKill: {fileID: 154696327}
   waveNow: {fileID: 1015162150}

@@ -201,7 +201,6 @@ public class PlayerController : MonoBehaviour
 	}
 	void Update()
 	{
-		
 		if (playerVelocity != Vector3.zero)
         {
 			animator.SetFloat("Blend", 1);
@@ -210,8 +209,6 @@ public class PlayerController : MonoBehaviour
         {
 			animator.SetBool("Moving", false);
 		}
-
-
 	}
 
 	void OnTriggerEnter(Collider other)
