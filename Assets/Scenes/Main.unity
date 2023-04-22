@@ -1834,40 +1834,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1015162148}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79fc12ce2efc843368622da9dad4ec13, type: 3}
+  m_Script: {fileID: 11500000, guid: 7fdc50eb7a5f44e4b90aae551a8c9db8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 1015162151}
-  gradient:
-    serializedVersion: 2
-    key0: {r: 0.6603774, g: 0, b: 0, a: 1}
-    key1: {r: 1, g: 0.247543, b: 0, a: 1}
-    key2: {r: 1, g: 0.6897315, b: 0, a: 0}
-    key3: {r: 0.1874867, g: 0.8018868, b: 0.02647741, a: 0}
-    key4: {r: 0, g: 0, b: 0, a: 0}
-    key5: {r: 0, g: 0, b: 0, a: 0}
-    key6: {r: 0, g: 0, b: 0, a: 0}
-    key7: {r: 0, g: 0, b: 0, a: 0}
-    ctime0: 578
-    ctime1: 22359
-    ctime2: 46838
-    ctime3: 65535
-    ctime4: 0
-    ctime5: 0
-    ctime6: 0
-    ctime7: 0
-    atime0: 0
-    atime1: 65535
-    atime2: 0
-    atime3: 0
-    atime4: 0
-    atime5: 0
-    atime6: 0
-    atime7: 0
-    m_Mode: 0
-    m_NumColorKeys: 4
-    m_NumAlphaKeys: 2
-  fill: {fileID: 1246935453}
   text: {fileID: 283766403}
 --- !u!114 &1015162151
 MonoBehaviour:
@@ -2402,6 +2372,7 @@ MonoBehaviour:
   currentWave: 0
   enemyRemain: {fileID: 197672056}
   enemyToKill: {fileID: 154696327}
+  waveNow: {fileID: 1015162150}
 --- !u!4 &1146590452
 Transform:
   m_ObjectHideFlags: 0

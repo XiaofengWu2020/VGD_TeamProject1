@@ -15,18 +15,22 @@ public class EnemySpawnManager : MonoBehaviour
     public int enemiesRemaining;
     private int enemiesKilled;
     public int currentWave;
+    public int totalWave;
     private int healthIncrementPerWave = 50;
 
     public EnemyRemain enemyRemain;
     public EnemyRemain enemyToKill;
+    public WaveBar waveNow;
 
     void Start()
     {
         currentWave = 1;
+        totalWave = 4;
         enemiesRemaining = enemiesPerWave;
         enemiesKilled = 0;
         enemyRemain.EnemyLeft(enemiesRemaining);
         enemyToKill.EnemyToKill(enemiesToKillForNextWave - enemiesKilled);
+        waveNow.SetMaxWave(totalWave);
         SpawnWave();
     }
 
@@ -65,6 +69,7 @@ public class EnemySpawnManager : MonoBehaviour
     {
         yield return new WaitForSeconds(timeBetweenWaves);
         currentWave++;
+        waveNow.SetWave(currentWave);
         enemiesRemaining = enemiesPerWave;
         enemiesKilled = 0;
         enemiesToKillForNextWave += 2; // Increment the enemies to kill for the next wave
