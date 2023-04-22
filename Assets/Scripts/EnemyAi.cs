@@ -188,6 +188,23 @@ public class EnemyAi : MonoBehaviour
         Destroy(gameObject);
 
     }
+
+    public void Despawn()
+    {
+        StartCoroutine(Die());
+
+        IEnumerator Die() {
+            GameObject smoke = transform.Find("Smoke").gameObject;
+            smoke.GetComponent<ParticleSystem>().Play();
+            MeshRenderer[] rs = GetComponentsInChildren<MeshRenderer>();
+            foreach(MeshRenderer r in rs) {
+                r.enabled = false;
+            }
+
+            yield return new WaitForSeconds(3f);
+            Destroy(gameObject);
+        }
+    }
 }
 
 
