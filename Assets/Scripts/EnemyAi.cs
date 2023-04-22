@@ -86,7 +86,7 @@ public class EnemyAi : MonoBehaviour
                     dest = (nma.transform.position - closestHit.position).normalized * 20 + closestHit.position;
                 nma.SetDestination(dest);
                 float distance = (player.transform.position - nma.transform.position).magnitude;
-                if (distance <= 25)
+                if (distance <= 35)
                     aiState = AIState.AttackPlayerWithProjectile;
                 break;
             case AIState.AttackPlayerWithProjectile:
@@ -95,7 +95,7 @@ public class EnemyAi : MonoBehaviour
                 {
                     Throw();
                     distance = (player.transform.position - nma.transform.position).magnitude;
-                    if (distance > 30)
+                    if (distance > 40)
                         aiState = AIState.ChasePlayer;
                     //gameObject.transform.position, throwSpeed, Physics.gravity, player.transform.position, player.GetComponent<PlayerController>().playerVelocity, player.GetComponent<PlayerController>().cameraTransform.forward, MaxAllowedThrowPositionError
                 }
