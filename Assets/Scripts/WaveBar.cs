@@ -22,7 +22,7 @@ public class WaveBar : MonoBehaviour
 
     public void SetWave(float wave)
     {
-        slider.value = wave;
+        slider.value = enemy.totalWave - wave + 1;
         //fill.color = gradient.Evaluate(slider.normalizedValue);
         text.text = wave.ToString();
     }

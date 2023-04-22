@@ -41,8 +41,10 @@ public class PlayerController : MonoBehaviour
 
 	private bool audioFading = false;
 
-	// At the start of the game..
-	void Awake()
+    public LoseScript loseState;
+
+    // At the start of the game..
+    void Awake()
 	{
 		Cursor.lockState = CursorLockMode.Locked;
 		animator = GetComponent<Animator>();
@@ -56,7 +58,6 @@ public class PlayerController : MonoBehaviour
 		shootCDcounter = shootCD;
 		playerHealth = maxHealth;
 		healthBar.SetMaxHealth(maxHealth);
-
         wind = cameraTransform.Find("Wind").gameObject;
 	}
 
@@ -209,6 +210,10 @@ public class PlayerController : MonoBehaviour
         {
 			animator.SetBool("Moving", false);
 		}
+		if (playerHealth <= 0)
+		{
+            loseState.loseShow();
+        }
 	}
 
 	void OnTriggerEnter(Collider other)
