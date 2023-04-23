@@ -105,7 +105,7 @@ public class EnemySpawnManager : MonoBehaviour
 
     void Update()
     {
-        if (currentWave == 4 && enemiesKilled == enemiesToKillForNextWave)
+        if (currentWave == 4 && enemiesKilled >= enemiesToKillForNextWave)
         winState.winShow();
     }
 }
