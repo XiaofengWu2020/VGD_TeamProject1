@@ -24,6 +24,7 @@ public class EnemyAi : MonoBehaviour
     private bool shootable;
     public float shootForce = 6;
     public float upForce = 2;
+    private float distance;
     public enum AIState
     {
         Patrol,
@@ -59,7 +60,7 @@ public class EnemyAi : MonoBehaviour
         {
             shootCDcounter--;
         }
-
+        
 
         if (shootCDcounter < 0)
         {
@@ -70,6 +71,7 @@ public class EnemyAi : MonoBehaviour
 
     void Update()
     {
+        distance = (player.transform.position - nma.transform.position).magnitude;
         switch (aiState)
         {
             case AIState.Patrol:
@@ -85,17 +87,17 @@ public class EnemyAi : MonoBehaviour
                 if (NavMesh.SamplePosition(player.transform.position, out closestHit, 500f, NavMesh.AllAreas))
                     dest = (nma.transform.position - closestHit.position).normalized * 20 + closestHit.position;
                 nma.SetDestination(dest);
-                float distance = (player.transform.position - nma.transform.position).magnitude;
-                if (distance <= 25)
+                
+                if (distance <= 100)
                     aiState = AIState.AttackPlayerWithProjectile;
                 break;
             case AIState.AttackPlayerWithProjectile:
 
                 if (shootable) 
                 {
-                    Throw();
+                    Throw(distance);
                     distance = (player.transform.position - nma.transform.position).magnitude;
-                    if (distance > 30)
+                    if (distance > 70)
                         aiState = AIState.ChasePlayer;
                     //gameObject.transform.position, throwSpeed, Physics.gravity, player.transform.position, player.GetComponent<PlayerController>().playerVelocity, player.GetComponent<PlayerController>().cameraTransform.forward, MaxAllowedThrowPositionError
                 }
@@ -124,7 +126,7 @@ public class EnemyAi : MonoBehaviour
         }
     }
 
-    public void Throw()
+    public void Throw(float distance)
     {
         if (shootable)
         {
@@ -140,8 +142,8 @@ public class EnemyAi : MonoBehaviour
             var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
             bullet.transform.forward = direction.normalized;
 
-            bullet.GetComponent<Rigidbody>().AddForce(direction.normalized * shootForce, ForceMode.Impulse);
-            bullet.GetComponent<Rigidbody>().AddForce(Camera.main.transform.up * upForce, ForceMode.Impulse);
+            bullet.GetComponent<Rigidbody>().AddForce(direction.normalized * (shootForce), ForceMode.Impulse);
+            bullet.GetComponent<Rigidbody>().AddForce(Camera.main.transform.up * upForce * distance * 0.025f, ForceMode.Impulse);
         }
 
     }

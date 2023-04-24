@@ -10,7 +10,7 @@ public class EnemySpawnManager : MonoBehaviour
     public GameObject EnemyModel;
     public int enemiesPerWave = 15;
     public int enemiesToKillForNextWave = 3;
-    public float timeBetweenWaves = 5f;
+    public float timeBetweenWaves = 0.01f;
 
     public int enemiesRemaining;
     private int enemiesKilled;
@@ -105,7 +105,7 @@ public class EnemySpawnManager : MonoBehaviour
 
     void Update()
     {
-        if (currentWave == 4 && enemiesKilled >= enemiesToKillForNextWave)
+        if (currentWave >= 4 && enemiesKilled >= enemiesToKillForNextWave)
         winState.winShow();
     }
 }
